@@ -31,10 +31,7 @@ const Camera = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Camera Stream</h1>
-            <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: 'auto' }} />
-        </div>
+        <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: 'auto' }} />
     );
 };
 
