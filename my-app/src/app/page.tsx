@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <div id="home" className="flex justify-center items-center h-screen font-semibold text-center landing-page-bg siemano bg-no-repeat bg-cover">
+      <div id="home" className="flex justify-end px-[15rem] items-center h-screen font-semibold text-center landing-page-bg siemano bg-no-repeat bg-cover">
         <section >
           <div className="text-8xl mb-4 text-violet-100 text-left" >
             <div className="fontcik2 text-5xl mx-[20px]" >#0094</div>
