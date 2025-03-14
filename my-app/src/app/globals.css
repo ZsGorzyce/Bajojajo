@@ -23,6 +23,12 @@ html {
     background-image: url("../../public/tapeta.png");
 }
 
+.login-page-bg {
+    background-image: url("../../public/tapeta-alt.jpg");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
 .siemano {
     background-position: center !important;
     background-repeat: no-repeat !important;
