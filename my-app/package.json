@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.0",
+    "@heroui/navbar": "^2.2.14",
+    "@heroui/react": "^2.7.5",
     "axios": "^1.8.3",
+    "framer-motion": "^12.5.0",
     "next": "^15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -20,7 +22,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^4",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }

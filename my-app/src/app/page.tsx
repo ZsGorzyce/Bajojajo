@@ -1,100 +1,59 @@
-"use client";
-
-import { useState } from "react";
-import axios from "axios";
-import Image from "next/image";
+"use client"
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
+import { HeroUIProvider } from "@heroui/react";
+export const AcmeLogo = () => {
+  return (
+    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+      <path
+        clipRule="evenodd"
+        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+};
 
 export default function Home() {
-    const [input, setInput] = useState("");
-    const [response, setResponse] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [history, setHistory] = useState<{ prompt: string; response: string }[]>([]);
 
-    const handleSubmit = async () => {
-        if (!input.trim()) return;
 
-        setLoading(true);
-        setResponse("");
-
-        try {
-            const res = await axios.post("/api/prompt", { prompt: input });
-            setResponse(res.data.text || "No response from API");
-
-            // Exclude the current prompt from history display
-            const recentHistory = res.data.history.slice(1); // Exclude the first item (most recent)
-            setHistory(recentHistory);
-        } catch (error) {
-            console.error("Error fetching response:", error);
-            setResponse("Error fetching response.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-8 space-y-6 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
-            <h1 className="text-2xl font-bold">Gemini AI Chat</h1>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask something..."
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg dark:border-gray-700 bg-white dark:bg-gray-800 focus:ring focus:ring-blue-400"
-                />
-                <button
-                    onClick={handleSubmit}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-                    disabled={loading}
-                >
-                    {loading ? "Loading..." : "Generate"}
-                </button>
-            </div>
-
-            <div className="p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg w-full max-w-md min-h-[100px]">
-                {loading ? (
-                    <p className="text-gray-500">Generating response...</p>
-                ) : (
-                    <p className="whitespace-pre-line">{response}</p>
-                )}
-            </div>
-
-            {/* History Section */}
-            <div className="w-full max-w-md">
-                <h2 className="text-lg font-semibold mt-6">Recent Prompts</h2>
-                <ul className="mt-2 space-y-3">
-                    {history.length === 0 ? (
-                        <p className="text-gray-500">No recent prompts.</p>
-                    ) : (
-                        history.map((item, index) => (
-                            <li key={index} className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                                <p className="font-semibold text-blue-600 dark:text-blue-400">{item.prompt}</p>
-                                <p className="text-gray-700 dark:text-gray-300">{item.response}</p>
-                            </li>
-                        ))
-                    )}
-                </ul>
-            </div>
-
-            <footer className="flex gap-4 mt-8 text-sm">
-                <a
-                    href="https://nextjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                    Learn Next.js
-                </a>
-                <a
-                    href="https://vercel.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                    Deploy on Vercel
-                </a>
-            </footer>
-        </div>
-    );
+  return (
+    <>
+      <HeroUIProvider>
+        <Navbar shouldHideOnScroll>
+          <NavbarBrand>
+            <AcmeLogo />
+            <p className="font-bold text-inherit">ACME</p>
+          </NavbarBrand>
+          <NavbarContent className="sm:flex gap-4" justify="center">
+            <NavbarItem>
+              <Link color="foreground" href="#">
+                Features
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link aria-current="page" href="#">
+                Customers
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="#">
+                Integrations
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem className="lg:flex">
+              <Link href="#">Login</Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="#" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
+      </HeroUIProvider>
+    </>
+  );
 }
