@@ -42,9 +42,9 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex items-center justify-center  dark:bg-gray-800">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-                <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
+                <h2 className="text-2xl font-bold mb-4 text-blue-500">Create an Account</h2>
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
