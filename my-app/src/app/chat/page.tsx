@@ -165,7 +165,6 @@ export default function Home() {
                 <PaperAirplaneIcon className="h-6 w-6 text-blue-500" />
                 Gemini AI Chat
             </h1>
-
             <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
                 <Input
                     type="text"
@@ -184,12 +183,10 @@ export default function Home() {
                     {loading ? "Loading..." : "Generate"}
                 </Button>
             </div>
-
             {/* Response Box */}
             {loading && <Card className="w-[100%] w-full max-w-md p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md min-h-[100px]">
                     <p className="text-black dark:text-white">Generating response...</p>
             </Card>}
-
             {/* History Section */}
             <div className="w-full max-w-md">
                 <h2 className="text-lg mb-2 font-semibold mt-6 flex items-center gap-2">

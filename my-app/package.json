@@ -16,7 +16,9 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.49.1",
     "axios": "^1.8.3",
+    "formidable": "^3.5.2",
     "framer-motion": "^12.5.0",
+    "multer": "^1.4.5-lts.1",
     "next": "^15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -24,6 +26,8 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/formidable": "^3.4.5",
+    "@types/multer": "^1.4.12",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
