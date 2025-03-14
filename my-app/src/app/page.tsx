@@ -1,18 +1,14 @@
 "use client"
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
-import { HeroUIProvider } from "@heroui/react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-
-export const AcmeLogo = () => {
+import { Button, ButtonGroup } from "@heroui/react";
+export const DiagonalArrow = () => {
   return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-      <path
-        clipRule="evenodd"
-        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+      <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
     </svg>
+
+
   );
 };
 
@@ -21,46 +17,15 @@ export default function Home() {
 
   return (
     <>
-      <HeroUIProvider>
-        <Navbar shouldHideOnScroll>
-          <NavbarBrand>
-            <AcmeLogo />
-            <p className="font-bold text-inherit">ACME</p>
-          </NavbarBrand>
-          <NavbarContent className="sm:flex gap-4" justify="center">
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Features
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link aria-current="page" href="#">
-                Home
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Integrations
-              </Link>
-            </NavbarItem>
-          </NavbarContent>
-          <NavbarContent justify="end">
-            <NavbarItem className="lg:flex">
-              <Link href="#">Login</Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Button as={Link} color="primary" href="#" variant="flat">
-                Sign Up
-              </Button>
-            </NavbarItem>
-          </NavbarContent>
-        </Navbar>
+      <div className="flex justify-center items-center h-screen text-5xl font-semibold">
+        <div className="m-20px">
+          Introducing <span className="text-violet-500 font-bold">Zs Gorzyce AI</span>
+          <div className="flex gap-4 items-center flex justify-center m-[2rem]">
+            <Button size="lg" className="bg-violet-200" radius="full">Open App <DiagonalArrow /></Button>
 
-        <main className="flex justify-center items-center h-screen">
-          <div>Introducing ZS GORZYCE AI</div>
-        </main>
-
-      </HeroUIProvider>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
