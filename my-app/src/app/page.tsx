@@ -1,6 +1,8 @@
 "use client"
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
 import { HeroUIProvider } from "@heroui/react";
+import { usePathname } from "next/navigation";
+
 export const AcmeLogo = () => {
   return (
     <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
@@ -15,7 +17,7 @@ export const AcmeLogo = () => {
 };
 
 export default function Home() {
-
+  const pathname = usePathname();
 
   return (
     <>
@@ -33,7 +35,7 @@ export default function Home() {
             </NavbarItem>
             <NavbarItem>
               <Link aria-current="page" href="#">
-                Customers
+                Home
               </Link>
             </NavbarItem>
             <NavbarItem>
@@ -53,6 +55,11 @@ export default function Home() {
             </NavbarItem>
           </NavbarContent>
         </Navbar>
+
+        <main className="flex justify-center items-center h-screen">
+          <div>Introducing ZS GORZYCE AI</div>
+        </main>
+
       </HeroUIProvider>
     </>
   );
