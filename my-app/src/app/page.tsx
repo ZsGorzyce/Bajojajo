@@ -1,9 +1,7 @@
 "use client"
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Button, ButtonGroup } from "@heroui/react";
+import { Button, } from "@heroui/react";
 import Features from "@/components/Features";
-import Link from "next/link";
 
 export const DiagonalArrow = () => {
   return (
@@ -20,8 +18,8 @@ export default function Home() {
 
   return (
     <>
-      <div id="home" className="flex justify-end px-[15rem] items-center h-screen font-semibold text-center landing-page-bg siemano bg-no-repeat bg-cover">
-        <section >
+      <div id="home" className=" flex justify-end px-[15rem] items-center h-screen font-semibold text-center landing-page-bg siemano bg-no-repeat bg-cover">
+        <section>
           <div className="text-8xl mb-4 text-violet-100 text-left" >
             <div className="fontcik2 text-5xl mx-[20px]" >#0094</div>
             <span className="text-violet-500 font-bold  fontcik">GENGAR</span>

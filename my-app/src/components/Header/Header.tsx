@@ -16,11 +16,12 @@ import { HeroUIProvider } from "@heroui/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Zdj from "../../../public/logo/noweLogo.png"
 
 export const AcmeLogo = () => {
     return (
         <Image
-            src={'/logo.png'}
+            src={Zdj}
             alt=""
             width={175}
             height={175}
@@ -50,7 +51,7 @@ export default function Header() {
     return (
         <>
             <HeroUIProvider>
-                <Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+                <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
                     <NavbarContent className="telefony sm:hidden" justify="start">
                         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
                     </NavbarContent>
@@ -72,8 +73,8 @@ export default function Header() {
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200 hoverik" href="#">
-                                Integrations
+                            <Link href="http://localhost:3000/#cat" className="text-violet-200 hoverik">
+                                Goofy ahh cat
                             </Link>
                         </NavbarItem>
                     </NavbarContent>
@@ -93,15 +94,15 @@ export default function Header() {
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="telefony2 text-violet-200">
-                            <Link className="text-violet-200 hoverik" href="#">
-                                Integrations
+                            <Link href={'http://localhost:3000#cat'} className="text-violet-200 hoverik">
+                                Goofy ahh cat
                             </Link>
                         </NavbarItem>
                     </NavbarContent>
 
                     <NavbarContent justify="end">
                         <NavbarItem className="lg:flex text-violet-500">
-                            <Link href="http://localhost:3000/login" className="text-violet-500">Login</Link>
+                            <Link href="/login" className="text-violet-500">Login</Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-500">
                             <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
@@ -129,7 +130,7 @@ export default function Header() {
                 </Navbar>
 
 
-            </HeroUIProvider>
+            </HeroUIProvider >
         </>
     );
 }
