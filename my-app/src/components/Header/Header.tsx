@@ -24,8 +24,7 @@ export default function Header() {
             <HeroUIProvider>
                 <Navbar shouldHideOnScroll>
                     <NavbarBrand>
-                        <AcmeLogo />
-                        <p className="font-bold text-inherit">ACME</p>
+                        <img src="../logo.png" alt="Logo" />
                     </NavbarBrand>
                     <NavbarContent className="sm:flex gap-4" justify="center">
                         <NavbarItem>
