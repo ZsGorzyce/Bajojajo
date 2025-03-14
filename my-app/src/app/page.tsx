@@ -21,7 +21,12 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen" style={{  
+          backgroundImage: "url(" + "../tlo.png" + ")",
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}>
         <div>Introducing ZS GORZYCE AI</div>
       </div>
     </>
