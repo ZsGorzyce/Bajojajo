@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import { Button } from "@heroui/react";
+import {Button, Card} from "@heroui/react";
 
 export default function ImageUploader() {
     const [image, setImage] = useState<File | null>(null);
@@ -62,8 +62,10 @@ export default function ImageUploader() {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-4 space-y-4" style={{ margin: '20px auto' }}>
-            <h2 className="text-2xl font-semibold text-center" style={{ marginBottom: '20px' }}>Upload and Analyze Image</h2>
+        <Card
+              className="max-w-lg mx-auto p-4 space-y-4"
+              style={{ margin: '20px auto',background:"white",padding:"20px" }}>
+            <h2 className="text-2xl font-semibold text-center" style={{ marginBottom: '20px',color:"black" }}>Upload and Analyze Image</h2>
 
             {/* Custom Image Upload Section */}
             <div
@@ -157,6 +159,6 @@ export default function ImageUploader() {
                     </div>}
                 </div>
             ))}
-        </div>
+        </Card>
     );
 }
