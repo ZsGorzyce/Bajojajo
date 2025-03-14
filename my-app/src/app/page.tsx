@@ -33,7 +33,7 @@ export default function Home() {
 
 
           <div className="flex gap-4 items-center justify-start ">
-            <Button size="lg" className="background  focus:ring-4 focus:ring-blue-500 focus:outline-none" radius="full">
+            <Button size="lg" className="background  focus:ring-4 focus:ring-blue-500 focus:outline-none" radius="full" href="http://localhost:3000/upload">
               Open App <DiagonalArrow />
             </Button>
           </div>

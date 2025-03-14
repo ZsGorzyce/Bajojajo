@@ -62,12 +62,12 @@ export default function Header() {
 
 
                         <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200 hoverik" href="#features">
+                            <Link className="text-violet-200 hoverik" href="http://localhost:3000#features">
                                 Features
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-200">
-                            <Link href="#home" className={`text-violet-200 hoverik`}>
+                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
                                 Home
                             </Link>
                         </NavbarItem>
@@ -83,12 +83,12 @@ export default function Header() {
                             <AcmeLogo />
                         </NavbarBrand>
                         <NavbarItem className="text-violet-200">
-                            <Link className="telefony2 text-violet-200 hoverik" href="#features">
+                            <Link className="telefony2 text-violet-200 hoverik" href="http://localhost:3000#features">
                                 Features
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="telefony2 text-violet-200">
-                            <Link href="#home" className={`text-violet-200 hoverik`}>
+                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
                                 Home
                             </Link>
                         </NavbarItem>
@@ -101,10 +101,10 @@ export default function Header() {
 
                     <NavbarContent justify="end">
                         <NavbarItem className="lg:flex text-violet-500">
-                            <Link href="#" className="text-violet-500">Login</Link>
+                            <Link href="http://localhost:3000/login" className="text-violet-500">Login</Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-500">
-                            <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="#" variant="flat">
+                            <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
                                 Sign Up
                             </Button>
                         </NavbarItem>
