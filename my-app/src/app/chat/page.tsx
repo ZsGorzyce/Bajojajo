@@ -1,14 +1,14 @@
 "use client";
-import { useState, useEffect } from "react";
+/*import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Input, Card } from "@heroui/react";
 import { PaperAirplaneIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { createClient } from "@/utils/supabase/client"; // Import Supabase client
+import { createClient } from "@/utils/supabase/client"; // Import Supabase client*/
 
 export default function Home() {
-    const [input, setInput] = useState("");
+  /*  const [input, setInput] = useState("");
     const [response, setResponse] = useState("");
     const [loading, setLoading] = useState(false);
     const [history, setHistory] = useState<{ prompt: string; response: string }[]>([]);
@@ -183,11 +183,11 @@ export default function Home() {
                     {loading ? "Loading..." : "Generate"}
                 </Button>
             </div>
-            {/* Response Box */}
+            {/!* Response Box *!/}
             {loading && <Card className="w-[100%] w-full max-w-md p-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md min-h-[100px]">
                     <p className="text-black dark:text-white">Generating response...</p>
             </Card>}
-            {/* History Section */}
+            {/!* History Section *!/}
             <div className="w-full max-w-md">
                 <h2 className="text-lg mb-2 font-semibold mt-6 flex items-center gap-2">
                     <ClockIcon className="h-5 w-5 text-gray-500" />
@@ -210,6 +210,7 @@ export default function Home() {
                     )}
                 </ul>
             </div>
-        </div>
-    );
+        </div>*/
+    /*);*/
+    return (<></>)
 }
