@@ -40,13 +40,13 @@ export default function RootLayout({
 
       <head></head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark text-foreground bg-background `}
       >
         <HeroUIProvider>
           <Header />
-          <main className="dark text-foreground bg-background">
-            {children}
-          </main>
+
+          {children}
+
         </HeroUIProvider>
 
       </body>
