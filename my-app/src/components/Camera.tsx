@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 const Camera = () => {
@@ -31,7 +32,7 @@ const Camera = () => {
         // Cleanup function to stop the video stream when the component unmounts
         return () => {
             if (videoRef.current) {
-                const stream = videoRef.current.srcObject;
+                const stream = videoRef.current.srcObject as MediaStream | null;
                 if (stream) {
                     const tracks = stream.getTracks();
                     tracks.forEach(track => track.stop());
@@ -41,7 +42,22 @@ const Camera = () => {
     }, []);
 
     return (
-        <video ref={videoRef} autoPlay playsInline style={{ width: '100%', height: 'auto' }} />
+        <div>
+            <div className=''>
+                <Image src={'/header.png'} width={50} height={50} alt={''} />
+            </div>
+            <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-auto border-4 border-blue-500 rounded-lg shadow-lg bg-gray-900/50"
+                style={{
+                    objectFit: 'cover', // Wideo wypełnia cały kontener, ale nie zniekształca obrazu
+                }}
+            />
+        </div>
+
+
     );
 };
 

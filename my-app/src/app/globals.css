@@ -4,6 +4,16 @@ html {
     scroll-behavior: smooth;
 }
 
+
+.fontcik {
+    font-style: italic;
+    font-family: Zuume Regular;
+}
+
+.fontcik2 {
+    font-family: Zuume ExtraLight;
+}
+
 :focus {
     outline: none !important;
     border: none !important;
@@ -39,4 +49,23 @@ html {
 
 .active {
     color: #8b5cf6 !important;
+}
+
+
+@media only screen and (min-width: 764px) {
+
+    .telefony {
+        display: none !important;
+    }
+
+
+}
+
+@media only screen and (max-width: 764px) {
+
+    .telefony2 {
+        display: none !important;
+    }
+
+
 }
