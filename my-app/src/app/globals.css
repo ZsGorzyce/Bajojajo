@@ -9,6 +9,10 @@ html {
     border: none !important;
 }
 
+.landing-page-bg {
+    background-image: url("../../public/tapeta.png");
+}
+
 .siemano {
     background-position: center !important;
     background-repeat: no-repeat !important;
