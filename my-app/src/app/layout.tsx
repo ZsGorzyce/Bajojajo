@@ -13,6 +13,7 @@ import {
 import "./globals.css"
 import "../input.css"
 import "../output.css"
+import "../../public/font/style.css"
 import Header from "@/components/Header/Header";
 
 const geistSans = Geist({

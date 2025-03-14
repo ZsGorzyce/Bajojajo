@@ -22,15 +22,17 @@ export default function Home() {
     <>
       <div id="home" className="flex justify-center items-center h-screen font-semibold text-center landing-page-bg siemano bg-no-repeat bg-cover">
         <section >
-          <div className="text-5xl mb-4 text-violet-100" >
-            Introducing <span className="text-violet-500 font-bold">ZSG POKEDEX</span>
+          <div className="text-8xl mb-4 text-violet-100 text-left" >
+            <div className="fontcik2 text-5xl mx-[20px]" >#0094</div>
+            <span className="text-violet-500 font-bold  fontcik">GENGAR</span>
+            <div className="text-base  font-semibold text-violet-100 max-w-xl mx-auto mb-6 text-left px-[5px]">
+              Sometimes, on a dark night, your shadow thrown by a streetlight will suddenly and startlingly overtake you. It is actually a GENGAR running past you, pretending to be your shadow.
+            </div>
           </div>
 
-          <div className="text-md font-semibold text-violet-100 max-w-xl mx-auto mb-6">
-            Scan, Discover, and Save Pokémon!
-          </div>
 
-          <div className="flex gap-4 items-center justify-center m-[2rem]">
+
+          <div className="flex gap-4 items-center justify-start ">
             <Button size="lg" className="background  focus:ring-4 focus:ring-blue-500 focus:outline-none" radius="full">
               Open App <DiagonalArrow />
             </Button>
