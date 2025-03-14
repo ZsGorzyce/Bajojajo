@@ -1,8 +1,11 @@
-"use client"
+'use client';
+import { useState, useEffect } from 'react';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
 import { HeroUIProvider } from "@heroui/react";
 import { usePathname } from "next/navigation";
+import { createClient } from '@/utils/supabase/client'; // Assuming this is the path to your Supabase client
 
+// Logo Component
 export const AcmeLogo = () => {
     return (
         <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
@@ -18,6 +21,30 @@ export const AcmeLogo = () => {
 
 export default function Header() {
     const pathname = usePathname();
+    const [user, setUser] = useState<any>(null);
+
+    useEffect(() => {
+        const supabase = createClient();
+
+        // Get the current session using getSession method
+        const getSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user || null);
+        };
+
+        getSession(); // Check session initially
+
+        // Listen for auth state changes
+        const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user || null);
+        });
+    }, []);
+
+    const handleLogout = async () => {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+        setUser(null);// Clear user after logout
+    };
 
     return (
         <>
@@ -45,14 +72,24 @@ export default function Header() {
                         </NavbarItem>
                     </NavbarContent>
                     <NavbarContent justify="end">
-                        <NavbarItem className="lg:flex">
-                            <Link href="#">Login</Link>
-                        </NavbarItem>
-                        <NavbarItem>
-                            <Button as={Link} color="primary" href="#" variant="flat">
-                                Sign Up
-                            </Button>
-                        </NavbarItem>
+                        {!user ? (
+                            <>
+                                <NavbarItem className="lg:flex">
+                                    <Link href="#">Login</Link>
+                                </NavbarItem>
+                                <NavbarItem>
+                                    <Button as={Link} color="primary" href="#" variant="flat">
+                                        Sign Up
+                                    </Button>
+                                </NavbarItem>
+                            </>
+                        ) : (
+                            <NavbarItem>
+                                <Button onClick={handleLogout} color="primary" variant="flat">
+                                    Logout
+                                </Button>
+                            </NavbarItem>
+                        )}
                     </NavbarContent>
                 </Navbar>
             </HeroUIProvider>
