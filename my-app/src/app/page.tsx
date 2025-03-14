@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen text-5xl font-semibold">
+      <div className="flex justify-center items-center h-screen text-5xl font-semibold bg-[url(/tlo.png)]" >
         <div className="m-20px">
           Introducing <span className="text-violet-500 font-bold">Zs Gorzyce AI</span>
           <div className="flex gap-4 items-center flex justify-center m-[2rem]">
