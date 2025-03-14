@@ -1,18 +1,18 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import {
-    HeroUIProvider,
-    Navbar,
-    NavbarBrand,
-    NavbarContent,
-    NavbarItem,
-    Link,
-    Button
+  HeroUIProvider,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button
 } from '@heroui/react'; // Importing components from heroui/react
-import "../../src/input.css"
-import "../../src/output.css"
+
 import "./globals.css"
-import {AcmeLogo} from "@/app/page";
+import "../input.css"
+import "../output.css"
 import Header from "@/components/Header/Header";
 
 const geistSans = Geist({
@@ -40,14 +40,14 @@ export default function RootLayout({
 
       <head></head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark text-foreground bg-background `}
       >
-      <HeroUIProvider>
-         <Header/>
-          <main>
-              {children}
-          </main>
-      </HeroUIProvider>
+        <HeroUIProvider>
+          <Header />
+
+          {children}
+
+        </HeroUIProvider>
 
       </body>
     </html>

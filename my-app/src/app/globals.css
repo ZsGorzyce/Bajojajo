@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+html {
+    scroll-behavior: smooth;
+}
+
+:focus {
+    outline: none !important;
+    border: none !important;
+}
+
+.siemano {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-clip: border-box;
+}
+
+.background {
+    background-color: #8b5cf6 !important;
+    color: #2e1065 !important;
+    font-weight: 600 !important;
+}
+
+
+
+#features {
+    background-color: #2e1065;
+}
+
+.kolorek {
+    color: #8b5cf6;
+}
+
+
+.hoverik:hover {
+    color: #8b5cf6 !important;
+}
+
+.active {
+    color: #8b5cf6 !important;
+}

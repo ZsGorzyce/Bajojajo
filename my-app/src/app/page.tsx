@@ -1,29 +1,46 @@
 "use client"
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@heroui/react";
-import { HeroUIProvider } from "@heroui/react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Button, ButtonGroup } from "@heroui/react";
+import Features from "@/components/Features";
+import Link from "next/link";
 
-export const AcmeLogo = () => {
+export const DiagonalArrow = () => {
   return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-      <path
-        clipRule="evenodd"
-        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+      <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clipRule="evenodd" />
     </svg>
   );
 };
+
+
 
 export default function Home() {
   const pathname = usePathname();
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
-        <div>Introducing ZS GORZYCE AI</div>
+      <div id="home" className="flex justify-center items-center h-screen font-semibold text-center bg-[url(/tapeta.png)] siemano bg-no-repeat bg-cover">
+        <section >
+          <div className="text-5xl mb-4 text-violet-100" >
+            Introducing <span className="text-violet-500 font-bold">ZSG POKEDEX</span>
+          </div>
+
+          <div className="text-md font-semibold text-violet-100 max-w-xl mx-auto mb-6">
+            Scan, Discover, and Save Pokémon!
+          </div>
+
+          <div className="flex gap-4 items-center justify-center m-[2rem]">
+            <Button size="lg" className="background  focus:ring-4 focus:ring-blue-500 focus:outline-none" radius="full">
+              Open App <DiagonalArrow />
+            </Button>
+          </div>
+        </section>
+
       </div>
+
+      <Features />
+
     </>
   );
 }
