@@ -23,17 +23,17 @@ export default function Header() {
                     </NavbarBrand>
                     <NavbarContent className="sm:flex gap-4" justify="center">
                         <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200" href="#">
+                            <Link className="text-violet-200 hoverik" href="#features">
                                 Features
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200" href="#">
+                            <Link href="#home" className={`text-violet-200 hoverik`}>
                                 Home
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200" href="#">
+                            <Link className="text-violet-200 hoverik" href="#">
                                 Integrations
                             </Link>
                         </NavbarItem>
@@ -43,7 +43,7 @@ export default function Header() {
                             <Link href="#" className="text-violet-500">Login</Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-500">
-                            <Button as={Link} className="text-violet-500 bg-violet-900 bg-opacity-20" href="#" variant="flat">
+                            <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="#" variant="flat">
                                 Sign Up
                             </Button>
                         </NavbarItem>
