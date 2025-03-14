@@ -2,17 +2,27 @@
 import { useEffect, useRef } from 'react';
 
 const Camera = () => {
-    const videoRef = useRef(null);
+    const videoRef: useRef<HTMLVideoElement | null> = useRef(null);
 
     useEffect(() => {
         const startCamera = async () => {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                 }
             } catch (error) {
-                console.error("Error accessing the camera: ", error);
+                const typedError = error as DOMException;
+                switch (typedError.name) {
+                    case "NotAllowedError":
+                        return (
+                            <h1>Camera blocked</h1>
+                        )
+                    default:
+                        return (
+                            <h1>Camera not avalible</h1>
+                        )
+                }
             }
         };
 
