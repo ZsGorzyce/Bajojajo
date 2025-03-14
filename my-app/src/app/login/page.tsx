@@ -40,7 +40,7 @@ export default function Login() {
                 <div className="mb-6 text-center text-xl font-semibold">
                     <div className="flex mb-2 justify-center items-center gap-2">
                         <PaperAirplaneIcon className="h-6 w-6 text-blue-500" />
-                        <span>Login to Your Account</span>
+                        <span className="text-blue-500">Login to Your Account</span>
                     </div>
                 </div>
 
@@ -58,7 +58,6 @@ export default function Login() {
                         className={"mb-2"}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        label="Email"
                         placeholder="Enter your email"
                         required
                     />
@@ -66,7 +65,6 @@ export default function Login() {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        label="Password"
                         placeholder="Enter your password"
                         required
                     />
