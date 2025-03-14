@@ -9,7 +9,12 @@ html {
     border: none !important;
 }
 
-
+.siemano {
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-clip: border-box;
+}
 
 .background {
     background-color: #8b5cf6 !important;
