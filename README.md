@@ -4,7 +4,6 @@
 git clone https://github.com/ZsGorzyce/Bajojajo.git
 cd Bajojajo/my-app
 npm install
-npm run build
 npm run dev
 ```
 
