@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
     Navbar,
     NavbarBrand,
@@ -10,13 +10,11 @@ import {
     Link,
     Button,
 } from "@heroui/react";
-
-
 import { HeroUIProvider } from "@heroui/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import Zdj from "../../../public/logo/noweLogo.png"
+import Zdj from "../../../public/logo/noweLogo.png";
 
 export const AcmeLogo = () => {
     return (
@@ -25,29 +23,29 @@ export const AcmeLogo = () => {
             alt=""
             width={175}
             height={175}
-
         />
-
     );
 };
 
 export default function Header() {
     const pathname = usePathname();
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const menuItems = [{
-        name: "Features", href: "#features",
+    // Function to handle smooth scrolling to hash sections
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, hash: string) => {
+        e.preventDefault(); // Prevent default link behavior
+        const element = document.getElementById(hash);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the element
+        }
+    };
 
-    },
-    {
-        name: "Home", href: "#home",
-
-    },
-    {
-        name: "ads", href: "#asd",
-    }
+    const menuItems = [
+        { name: "Features", href: "#features" },
+        { name: "Home", href: "#home" },
+        { name: "Goofy ahh cat", href: "#cat" },
     ];
+
     return (
         <>
             <HeroUIProvider>
@@ -57,57 +55,40 @@ export default function Header() {
                     </NavbarContent>
 
                     <NavbarBrand>
-                        <AcmeLogo />
-                    </NavbarBrand>
-                    <NavbarContent className="telefony2 sm:flex gap-4" justify="center">
-
-
-                        <NavbarItem className="text-violet-200">
-                            <Link className="text-violet-200 hoverik" href="http://localhost:3000#features">
-                                Features
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem className="text-violet-200">
-                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
-                                Home
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem className="text-violet-200">
-                            <Link href="http://localhost:3000/#cat" className="text-violet-200 hoverik">
-                                Goofy ahh cat
-                            </Link>
-                        </NavbarItem>
-                    </NavbarContent>
-
-                    <NavbarContent className="telefony sm:flex gap-4" justify="center">
-                        <NavbarBrand className="telefony2">
+                        <Link href={"/"}>
                             <AcmeLogo />
-                        </NavbarBrand>
-                        <NavbarItem className="text-violet-200">
-                            <Link className="telefony2 text-violet-200 hoverik" href="http://localhost:3000#features">
-                                Features
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem className="telefony2 text-violet-200">
-                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
-                                Home
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem className="telefony2 text-violet-200">
-                            <Link href={'http://localhost:3000#cat'} className="text-violet-200 hoverik">
-                                Goofy ahh cat
-                            </Link>
-                        </NavbarItem>
+                        </Link>
+                    </NavbarBrand>
+
+                    <NavbarContent className="telefony2 sm:flex gap-4" justify="center">
+                        {menuItems.map((item, index) => (
+                            <NavbarItem key={index} className="text-violet-200">
+                                <Link
+                                    className="text-violet-200 hoverik"
+                                    href={item.href}
+                                    onClick={(e) => handleScroll(e, item.href.slice(1))} // Handle smooth scroll
+                                >
+                                    {item.name}
+                                </Link>
+                            </NavbarItem>
+                        ))}
                     </NavbarContent>
 
                     <NavbarContent justify="end">
                         <NavbarItem className="lg:flex text-violet-500">
-                            <Link href="/login" className="text-violet-500">Login</Link>
+                            <Link href="/login" className="text-violet-500">
+                                Login
+                            </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-500">
-                            <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
-                                Sign Up
-                            </Button>
+                            <Link href="/register" style={{ color: "inherit" }}>
+                                <Button
+                                    className="text-violet-500 !bg-violet-950 !bg-opacity-20" // Use !important to enforce styles
+                                    variant="flat"
+                                >
+                                    Sign Up
+                                </Button>
+                            </Link>
                         </NavbarItem>
                     </NavbarContent>
 
@@ -119,7 +100,8 @@ export default function Header() {
                                     color={
                                         index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
                                     }
-                                    href={item.href}
+                                    href={`${item.href}`}
+                                    onClick={(e) => handleScroll(e, item.href.slice(1))} // Handle smooth scroll
                                     size="lg"
                                 >
                                     {item.name}
@@ -128,9 +110,7 @@ export default function Header() {
                         ))}
                     </NavbarMenu>
                 </Navbar>
-
-
-            </HeroUIProvider >
+            </HeroUIProvider>
         </>
     );
 }

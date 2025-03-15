@@ -1,18 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { createClient } from '@/utils/supabase/client'; // Import your Supabase client utility
 import { useRouter } from 'next/navigation'; // For redirect after registration
 import { Input, Button } from "@heroui/react";
 
 export default function RegisterPage() {
-    document.body.style.overflow = "hidden";
-
+    useEffect(() => {
+        if(document.body.style){
+            document.body.style.overflow = "hidden";
+        }
+    }, []);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const supabase = createClient()
+    const [success, setSuccess] = useState(false); // State for success message
+    const supabase = createClient();
     const router = useRouter(); // Initialize the router for redirect
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +24,7 @@ export default function RegisterPage() {
 
         setLoading(true);
         setError('');
-
+        setSuccess(false); // Reset success state
 
         try {
             const { data, error } = await supabase.auth.signUp({
@@ -34,20 +38,24 @@ export default function RegisterPage() {
                         setError(error.message);
                         break;
                     default:
-                        setError("Failed to register a account. Try again.");
-                        break
+                        setError("Failed to register an account. Try again.");
+                        break;
                 }
+                return; // Exit the function if there's an error
             }
 
             console.log('User signed up:', data);
+            setSuccess(true); // Set success state to true
 
-            // Redirect to login or dashboard after successful registration
+            // Redirect to login after a short delay
+            setTimeout(() => {
+                router.push("/login");
+            }, 1000); // Redirect after 3 seconds
         } catch (err) {
             console.error('Error:', err);
             setError('Failed to sign up. Please try again.');
         } finally {
             setLoading(false);
-            router.push("/login")
         }
     };
 
@@ -56,6 +64,11 @@ export default function RegisterPage() {
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md !bg-zinc-900">
                 <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
                 {error && <div className="text-red-500 mb-4">{error}</div>}
+                {success && ( // Display success message if registration is successful
+                    <div className="text-green-500 mb-4">
+                        Registration successful! Redirecting to login...
+                    </div>
+                )}
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">

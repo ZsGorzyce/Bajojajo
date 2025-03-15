@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 const Camera = () => {
-    const videoRef: useRef<HTMLVideoElement | null> = useRef(null);
+    const videoRef= useRef<HTMLVideoElement | null>(null);
 
     useEffect(() => {
         const startCamera = async () => {

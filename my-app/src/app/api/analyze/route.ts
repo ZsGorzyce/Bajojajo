@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
         // Use the Gemini AI model to generate a description
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const result = await model.generateContent([
-            'Need recognize Pokémon  on image. I want see JSOM FORMAT like that. Should be only object!!! : {isPokemon :true/false,' +
+            'Need recognize Pokémon  on image. I want see JSOM FORMAT like that. Must be no Comments in the object! Should be only object!!! : {isPokemon :true/false,' +
             'description:provide arguments why it not pokemon if pokemon not exist if pokemon exist description of pokemon,' +
             'name:give me name of pikachu if detected,' +
             'code:code of pokemon like #0001, weakness:list of weakness,type:type of pokemon',
