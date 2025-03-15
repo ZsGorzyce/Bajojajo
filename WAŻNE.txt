@@ -1,0 +1,4 @@
+Przed odpalenie należy wpisać komendy w kąsoli
+npm install
+npm run build
+npm run dev
