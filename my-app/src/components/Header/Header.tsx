@@ -120,8 +120,8 @@ export default function Header() {
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="telefony2 text-violet-200">
-                            <Link href={'http://localhost:3000#cat'} className="text-violet-200 hoverik">
-                                Goofy ahh cat
+                            <Link href={'/pokemons'} className="text-violet-200 hoverik">
+                                Pokedex
                             </Link>
                         </NavbarItem>
                     </NavbarContent>
@@ -153,7 +153,7 @@ export default function Header() {
                                     className="w-full"
 
                                     color={
-                                        index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+                                        index === 2 ? "secondary" : index === menuItems.length - 1 ? "secondary" : "foreground"
                                     }
                                     href={item.href}
                                     size="lg"

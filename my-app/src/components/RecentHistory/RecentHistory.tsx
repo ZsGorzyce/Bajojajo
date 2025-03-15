@@ -17,7 +17,7 @@ const RecentHistory: React.FC<RecentHistoryProps> = ({ elems, setItem, withLinks
         <img
             src={elem.url}
             alt={elem.body.name}
-            className=" !w-[300px] !h-[300px] object-cover rounded-lg"
+            className=" !h-[300px] !w-[300] h-full  object-cover rounded-lg"
         />
 
     </div>)

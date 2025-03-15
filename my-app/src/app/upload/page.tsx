@@ -147,7 +147,9 @@ export default function ImageUploader() {
                     className="hidden"
                 />
 
-                {loading && (<h2>TODO</h2>)}
+                {loading && (<div className="fixed h-screen w-full left-[0] top-[0] !bg-[#181b1d] z-[10000]">
+                    <Image src={'/loading.gif'} className="fixed left-[0] top-[0] object-contain w-full h-screen z-[1999]" height={50} width={50} alt="" />
+                </div>)}
                 {error && <p>{error}</p>}
                 {currentUrl && (
                     <div className="mt-4 flex justify-center">
