@@ -100,8 +100,8 @@ export default function Header() {
                             </Link>
                         </NavbarItem>
                         <NavbarItem className="text-violet-200">
-                            <Link href="http://localhost:3000/#cat" className="text-violet-200 hoverik">
-                                Goofy ahh cat
+                            <Link href="http://localhost:3000/pokemons" className="text-violet-200 hoverik">
+                                Pokedex
                             </Link>
                         </NavbarItem>
                     </NavbarContent>

@@ -1,10 +1,10 @@
 "use client";
+import { redirect } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button, Card } from "@heroui/react";
 import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
-import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,15 +13,13 @@ export default function ImageUploader() {
     const supabase = createClient();
     const [image, setImage] = useState<File | null>(null);
     const [error, setError] = useState("");
-    const [DetectedPokemonId, setDetectedPokemonId] = useState()
+    const [DetectedPokemonId, setDetectedPokemonId] = useState<number>()
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState<PokemonDetection | null>(null);
     const [history, setHistory] = useState<HistoryElem[]>([]);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
-    const [historyLoading, setHistoryLoading] = useState(true); // New state for history loading
 
 
-    const [capturedImage, setCapturedImage] = useState<File | null>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     // Start the camera
@@ -38,11 +36,9 @@ export default function ImageUploader() {
 
     useEffect(() => {
         const fetchHistory = async () => {
-            console.log('ur');
             const { data: { user } } = await supabase.auth.getUser();
             console.log('u', user);
             if (!user) {
-                setHistoryLoading(false); // Stop loading if no user
                 return;
             }
 
@@ -66,9 +62,6 @@ export default function ImageUploader() {
             catch (error) {
                 console.error("Error fetching history:", error);
             }
-            finally {
-                setHistoryLoading(false);
-            }
         };
         fetchHistory();
     }, []);
@@ -85,48 +78,38 @@ export default function ImageUploader() {
     const pathname = usePathname();
 
     const handleUpload = async () => {
-        if (image) {
-            const url = URL.createObjectURL(image as File);
-            setLoading(true);
-            const formData = new FormData();
-            formData.append("image", image);
-            try {
-                const res = await axios.post<PokemonDetection>("/api/analyze", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                });
-                console.log(res.data);
-                setItem(res.data);
+        if (!image) {
+            return
+        }
 
-                setHistory((prevState) => ([{ id: Math.random(), pokemonId: res.data.id, body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
-                setDetectedPokemonId(res.data.id);
-            } catch (error) {
-                console.error("Error uploading image:", error);
-                setError("An error occurred while analyzing the image.");
-            } finally {
-                setLoading(false);
-            }
+        const url = URL.createObjectURL(image as File);
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("image", image);
+        try {
+            const res = await axios.post<PokemonDetection>("/api/analyze", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            setItem(res.data);
+
+            setHistory((prevState) => ([{ id: Math.floor(Math.random() * 69420), pokemonId: res.data.id, body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
+            setDetectedPokemonId(history[history.length - 1].id);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            setError("An error occurred while analyzing the image.");
+        } finally {
+            setLoading(false);
         }
     };
 
-    const router = useRouter();
-    console.log(history)
-
-    useEffect(() => {
-        if (pathname.includes("/upload") && !loading && image) {
-            handleUpload()
-
-        }
-
-        if (DetectedPokemonId !== undefined) {
-            router.push(`/pokemons/${DetectedPokemonId}`)
-        }
-
-    }, [pathname, image])
-
-    console.log(DetectedPokemonId)
-
+    if (pathname.includes("/upload") && !loading && image) {
+        handleUpload()
+    }
+    if (DetectedPokemonId !== undefined) {
+        redirect(`/pokemons/${DetectedPokemonId + 1}`)
+    }
 
 
     return (
@@ -170,15 +153,7 @@ export default function ImageUploader() {
                     className="hidden"
                 />
 
-                {image && (
-                    <div className=" flex justify-center w-full h-w-full">
-                        <img
-                            src={URL.createObjectURL(image)}
-                            alt="Uploaded Preview"
-                            className=" object-cover rounded-lg border"
-                        />
-                    </div>
-                )}
+                {loading && (<h2>TODO</h2>)}
                 {error && <p>{error}</p>}
                 {currentUrl && (
                     <div className="mt-4 flex justify-center">
@@ -189,11 +164,6 @@ export default function ImageUploader() {
                         />
                     </div>
                 )}
-
-
-
-
-
                 {item && (
                     <div className="mt-4 text-center text-lg text-gray-700">
                         <p><strong>{item.name} detected:</strong></p>
@@ -243,24 +213,6 @@ export default function ImageUploader() {
                     </div>
                 )}
             </Card >
-
-            <div className="max-w-2xl mx-auto mt-6">
-                <h3 className="text-xl font-semibold mb-4">Recent Analyses</h3>
-                {historyLoading ? (
-                    <div className="flex justify-center items-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-                    </div>
-                ) : (
-                    <RecentHistory
-                        setItem={(item) => {
-                            setItem(item.body);
-                            setCurrentUrl(item.url);
-                            setImage(null);
-                        }}
-                        elems={history}
-                    />
-                )}
-            </div>
         </>
     );
 }
