@@ -1,8 +1,8 @@
-export type PokemonDetection={
+export type PokemonDetection = {
     isPokemon: boolean;
     description: string;
     name: string;
-    code?: string;
+    pokedex_code?: string;
     weakness?: string[];
     type?: string[];
     properties?: {
@@ -14,9 +14,9 @@ export type PokemonDetection={
     };
 };
 export type HistoryElem = {
-   id:number,
-    created_at:string,
-    user_id:number,
-    url:string,
-    body:PokemonDetection
+    id: number,
+    created_at: string,
+    user_id: number,
+    url: string,
+    body: PokemonDetection
 };

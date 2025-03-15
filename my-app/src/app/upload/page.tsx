@@ -6,7 +6,6 @@ import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
-import {}
 import Image from "next/image";
 
 export default function ImageUploader() {
@@ -94,11 +93,6 @@ export default function ImageUploader() {
                 <Image src={'/header.png'} width={50} height={50} alt="" className="absolute left-[0] top-[0] w-full" unoptimized />
 
 
-                <div>
-                    <button style={{ background: "black" }} onClick={startCamera}>
-                        Start Camera
-                    </button>
-                </div>
                 <div className="flex justify-center w-full h-[800px]">
                     <Image
                         src={'/captureNoBG.png'}
@@ -160,11 +154,11 @@ export default function ImageUploader() {
 
                 {item && (
                     <div className="mt-4 text-center text-lg text-gray-700">
-                        <p><strong>Pikachu detected:</strong> {item.isPokemon ? "Yes" : "No"}</p>
+                        <p><strong>{item.name} detected:</strong></p>
                         <p><strong>Description:</strong> {item.description}</p>
                         {item.isPokemon && <>
                             <p><strong>Name:</strong> {item.name}</p>
-                            <p><strong>Code:</strong> {item.code}</p>
+                            <p><strong>Code:</strong> {item.pokedex_code}</p>
                             <p><strong>Type:</strong> {item.type}</p>
                         </>}
                         {item.isPokemon && item.weakness && <>
