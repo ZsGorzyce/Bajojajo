@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import { HistoryElem, PokemonDetection } from "@/types/history"; // Import your existing Supabase client
+import Image from "next/image";
 
 const Page = () => {
     const [pokemons, setPokemons] = useState<any[]>([]);
@@ -60,7 +61,10 @@ const Page = () => {
             <h1 className="text-2xl font-bold mb-4 text-violet-200 text-center">Your discovered pokemons</h1>
 
             {loading ? (
-                <p>Loading...</p>
+                <div className="fixed h-screen w-full left-[0] top-[0] !bg-[#181b1d] z-[10000]">
+                    <Image src={'/loading.gif'} className="fixed left-[0] top-[0] object-contain w-full h-screen z-[1999]" height={50} width={50} alt="" />
+                </div>
+
             ) : pokemons.length === 0 ? (
                 <p>No Pokémons found.</p>
             ) : (
