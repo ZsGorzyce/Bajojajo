@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { Button } from "@heroui/react";
 import Features from "@/components/Features";
+import Link from "next/link";
 
 export const DiagonalArrow = () => {
   return (
@@ -31,11 +32,11 @@ export default function Home() {
 
 
           <div className="flex gap-4 items-center justify-start ">
-            <a href="/upload">
+            <Link href="/upload">
               <Button size="lg" className="background  focus:ring-4 focus:ring-blue-500 focus:outline-none" radius="full">
                 Open App <DiagonalArrow />
               </Button>
-            </a>
+            </Link>
           </div>
         </section>
 

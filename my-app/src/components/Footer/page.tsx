@@ -27,8 +27,8 @@ export default function Footer() {
 
                     {/* Second Column */}
                     <div className="flex flex-col">
-                        <Link href={'#home'} className="text-base text-violet-100 font-semibold mb-2">Home</Link>
-                        <Link href={'#features'} className="text-base text-violet-100 font-semibold mb-2">Features</Link>
+                        <Link href={'/#home'} className="text-base text-violet-100 font-semibold mb-2">Home</Link>
+                        <Link href={'/#features'} className="text-base text-violet-100 font-semibold mb-2">Features</Link>
                         <Link href={'/upload'} className="text-base text-violet-100 font-semibold mb-2">Open App</Link>
                         <Link href={'/login'} className="text-base text-violet-100 font-semibold mb-2">Login</Link>
                         <Link href={'/register'} className="text-base text-violet-100 font-semibold mb-2">Register</Link>

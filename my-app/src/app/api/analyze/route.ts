@@ -69,8 +69,20 @@ export async function POST(request: NextRequest) {
             const startIdx = res.indexOf('{');
             const endIdx = res.lastIndexOf('}');
             const trimmedString = res.slice(startIdx, endIdx + 1);
-
+            const parsedBlock=JSON.parse(trimmedString);
             // Upload the image to Supabase bucket named 'photos'
+            const { data:exsitingPokemon, error } = await supabase
+                .from("pokemons")
+                .select("*")
+                .eq("name", parsedBlock.name) // Match by Pokémon name
+                .eq("user_id", user.id) // Match by user ID
+                .single();
+            if(exsitingPokemon){
+                const body=JSON.parse(exsitingPokemon.body);
+                return new Response(JSON.stringify({...body ,id:exsitingPokemon.id }), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' },
+            })}
             const fileName = Date.now().toString(); // Use a unique filename
             const { data: uploadData, error: uploadError } = await supabase
                 .storage
@@ -104,6 +116,7 @@ export async function POST(request: NextRequest) {
                         user_id: userId,
                         url: fileName, // Store the filename (or full URL if needed)
                         body: trimmedString,
+                        name:parsedBlock.name
                     },
                 ]).select();
 
@@ -120,7 +133,7 @@ export async function POST(request: NextRequest) {
                 url: imageUrl, // Add the image URL to the response
             };
 
-            return new Response(JSON.stringify({ ...combinedResponse }), {
+            return new Response(JSON.stringify({ ...combinedResponse,id:insertData[0].id }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
             });

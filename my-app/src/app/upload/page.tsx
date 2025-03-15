@@ -34,7 +34,7 @@ export default function ImageUploader() {
         }
     };
 
-    useEffect(() => {
+  /*  useEffect(() => {
         const fetchHistory = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             console.log('u', user);
@@ -64,7 +64,7 @@ export default function ImageUploader() {
             }
         };
         fetchHistory();
-    }, []);
+    }, []);*/
 
     const onInputChangeHandler = (e: any) => {
         const file = e.target.files?.[0];
@@ -87,15 +87,17 @@ export default function ImageUploader() {
         const formData = new FormData();
         formData.append("image", image);
         try {
-            const res = await axios.post<PokemonDetection>("/api/analyze", formData, {
+            const res = await axios.post<PokemonDetection & {id:number}>("/api/analyze", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
             setItem(res.data);
-
+            console.log('res.data:',res.data)
+/*
             setHistory((prevState) => ([{ id: Math.floor(Math.random() * 69420), pokemonId: res.data.id, body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
-            setDetectedPokemonId(history[history.length - 1].id);
+*/
+            setDetectedPokemonId(res.data.id);
         } catch (error) {
             console.error("Error uploading image:", error);
             setError("An error occurred while analyzing the image.");
@@ -108,10 +110,8 @@ export default function ImageUploader() {
         handleUpload()
     }
     if (DetectedPokemonId !== undefined) {
-        redirect(`/pokemons/${DetectedPokemonId + 1}`)
+        redirect(`/pokemons/${DetectedPokemonId}`)
     }
-
-
     return (
         <>
             <Card className="max-w-lg mx-auto p-4 space-y-4 bg-white shadow-lg rounded-none min-h-[900px] z-auto  bg-[url('/camera-bg.jpg')] bg-cover bg-no-repeat">
