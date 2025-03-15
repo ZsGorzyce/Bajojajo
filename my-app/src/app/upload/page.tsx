@@ -127,10 +127,6 @@ export default function ImageUploader() {
                         className="w-[700px]  object-contain opacity-80 z-[200]"
                     />
                 </div>
-
-
-
-
                 <Camera setImage={(image) => {
                     setImage(image);
                     setItem(null);
@@ -141,8 +137,6 @@ export default function ImageUploader() {
                     className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]   h-[5.5rem]  flex justify-center  bg-violet-500"
 
                 >
-
-
                 </div>
 
                 <input

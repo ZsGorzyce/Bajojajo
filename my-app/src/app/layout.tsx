@@ -1,14 +1,6 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
-import {
-  HeroUIProvider,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button
-} from '@heroui/react'; // Importing components from heroui/react
+import { HeroUIProvider } from '@heroui/react';
 
 import "./globals.css"
 import "../input.css"
