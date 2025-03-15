@@ -6,9 +6,10 @@ import React, { useState, useRef, useEffect } from "react";
 
 interface CameraComponentProps {
     setImage: (image: File) => void;
+    error?:string
 }
 
-const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
+const CameraComponent: React.FC<CameraComponentProps> = ({ setImage,error }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const pathname = usePathname();
     const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -29,7 +30,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
         if (pathname.includes("/upload")) {
             startCamera()
         }
-    }, [pathname])
+    }, [pathname,error])
 
     // Capture a photo from the video stream
     const capturePhoto = () => {
@@ -81,6 +82,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
 
 
             </div>
+
             {/* {imageSrc && (
                 <div>
                     <h2>Captured Photo</h2>
