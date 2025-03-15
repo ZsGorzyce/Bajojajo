@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import {
     Navbar,
     NavbarBrand,
@@ -10,11 +10,14 @@ import {
     Link,
     Button,
 } from "@heroui/react";
+
+
 import { HeroUIProvider } from "@heroui/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import Zdj from "../../../public/logo/noweLogo.png";
+import { useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
+import Zdj from "../../../public/logo/noweLogo.png"
 
 export const AcmeLogo = () => {
     return (
@@ -23,29 +26,55 @@ export const AcmeLogo = () => {
             alt=""
             width={175}
             height={175}
+
         />
+
     );
 };
 
 export default function Header() {
-    const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [User, setUser]: User | null = useState(null);
 
-    // Function to handle smooth scrolling to hash sections
-    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, hash: string) => {
-        e.preventDefault(); // Prevent default link behavior
-        const element = document.getElementById(hash);
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the element
+    const supabase = createClient();
+    useEffect(() => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session: Session | null) => {
+            setUser(session?.user);
+        });
+
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+        };
+
+        checkUser();
+
+        return () => {
+            subscription.unsubscribe();
+        }
+    }, []);
+
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Error logging out:', error.message);
+        } else {
+            setUser(null);
         }
     };
 
-    const menuItems = [
-        { name: "Features", href: "#features" },
-        { name: "Home", href: "#home" },
-        { name: "Goofy ahh cat", href: "#cat" },
-    ];
+    const menuItems = [{
+        name: "Features", href: "#features",
 
+    },
+    {
+        name: "Home", href: "#home",
+
+    },
+    {
+        name: "ads", href: "#asd",
+    }
+    ];
     return (
         <>
             <HeroUIProvider>
@@ -55,53 +84,78 @@ export default function Header() {
                     </NavbarContent>
 
                     <NavbarBrand>
-                        <Link href={"/"}>
-                            <AcmeLogo />
-                        </Link>
+                        <AcmeLogo />
                     </NavbarBrand>
-
                     <NavbarContent className="telefony2 sm:flex gap-4" justify="center">
-                        {menuItems.map((item, index) => (
-                            <NavbarItem key={index} className="text-violet-200">
-                                <Link
-                                    className="text-violet-200 hoverik"
-                                    href={item.href}
-                                    onClick={(e) => handleScroll(e, item.href.slice(1))} // Handle smooth scroll
-                                >
-                                    {item.name}
-                                </Link>
-                            </NavbarItem>
-                        ))}
+
+
+                        <NavbarItem className="text-violet-200">
+                            <Link className="text-violet-200 hoverik" href="http://localhost:3000#features">
+                                Features
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="text-violet-200">
+                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
+                                Home
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="text-violet-200">
+                            <Link href="http://localhost:3000/#cat" className="text-violet-200 hoverik">
+                                Goofy ahh cat
+                            </Link>
+                        </NavbarItem>
+                    </NavbarContent>
+
+                    <NavbarContent className="telefony sm:flex gap-4" justify="center">
+                        <NavbarBrand className="telefony2">
+                            <AcmeLogo />
+                        </NavbarBrand>
+                        <NavbarItem className="text-violet-200">
+                            <Link className="telefony2 text-violet-200 hoverik" href="http://localhost:3000#features">
+                                Features
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="telefony2 text-violet-200">
+                            <Link href="http://localhost:3000#home" className={`text-violet-200 hoverik`}>
+                                Home
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem className="telefony2 text-violet-200">
+                            <Link href={'http://localhost:3000#cat'} className="text-violet-200 hoverik">
+                                Goofy ahh cat
+                            </Link>
+                        </NavbarItem>
                     </NavbarContent>
 
                     <NavbarContent justify="end">
-                        <NavbarItem className="lg:flex text-violet-500">
-                            <Link href="/login" className="text-violet-500">
-                                Login
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem className="text-violet-500">
-                            <Link href="/register" style={{ color: "inherit" }}>
-                                <Button
-                                    className="text-violet-500 !bg-violet-950 !bg-opacity-20" // Use !important to enforce styles
-                                    variant="flat"
-                                >
-                                    Sign Up
-                                </Button>
-                            </Link>
-                        </NavbarItem>
+                        {!User ? (
+                            <>
+                                <NavbarItem className="lg:flex text-violet-500">
+                                    <Link href="/login" className="text-violet-500">Login</Link>
+                                </NavbarItem>
+                                <NavbarItem className="text-violet-500">
+                                    <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
+                                        Sign Up
+                                    </Button>
+                                </NavbarItem>
+                            </>
+                        ) : (
+                            <NavbarItem className="lg:flex text-violet-500">
+                                <Button style={{ background: "black" }} onPress={handleLogout} className="text-violet-500">Logout</Button>
+                            </NavbarItem>
+                        )}
                     </NavbarContent>
 
                     <NavbarMenu>
                         {menuItems.map((item, index) => (
                             <NavbarMenuItem key={`${item}-${index}`}>
                                 <Link
+                                    onPress={() => setIsMenuOpen(false)}
                                     className="w-full"
                                     color={
                                         index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
                                     }
-                                    href={`${item.href}`}
-                                    onClick={(e) => handleScroll(e, item.href.slice(1))} // Handle smooth scroll
+                                    href={item.href}
                                     size="lg"
                                 >
                                     {item.name}
@@ -110,7 +164,9 @@ export default function Header() {
                         ))}
                     </NavbarMenu>
                 </Navbar>
-            </HeroUIProvider>
+
+
+            </HeroUIProvider >
         </>
     );
 }
