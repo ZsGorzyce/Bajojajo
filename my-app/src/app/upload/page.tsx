@@ -6,7 +6,6 @@ import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
-import {}
 import Image from "next/image";
 
 export default function ImageUploader() {
