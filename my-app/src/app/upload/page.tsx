@@ -1,29 +1,44 @@
 "use client";
-import { useState, useEffect } from "react";
+import { redirect } from 'next/navigation';
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button, Card } from "@heroui/react";
 import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
-import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ImageUploader() {
     const supabase = createClient();
     const [image, setImage] = useState<File | null>(null);
     const [error, setError] = useState("");
+    const [DetectedPokemonId, setDetectedPokemonId] = useState<number>()
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState<PokemonDetection | null>(null);
     const [history, setHistory] = useState<HistoryElem[]>([]);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
-    const [historyLoading, setHistoryLoading] = useState(true); // New state for history loading
+
+
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // Start the camera
+    const startCamera = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+            }
+        } catch (error) {
+            console.error("Error accessing the camera:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchHistory = async () => {
-            console.log('ur');
             const { data: { user } } = await supabase.auth.getUser();
             console.log('u', user);
             if (!user) {
-                setHistoryLoading(false); // Stop loading if no user
                 return;
             }
 
@@ -47,9 +62,6 @@ export default function ImageUploader() {
             catch (error) {
                 console.error("Error fetching history:", error);
             }
-            finally {
-                setHistoryLoading(false);
-            }
         };
         fetchHistory();
     }, []);
@@ -63,29 +75,42 @@ export default function ImageUploader() {
         }
     };
 
+    const pathname = usePathname();
+
     const handleUpload = async () => {
-        if (image) {
-            const url = URL.createObjectURL(image as File);
-            setLoading(true);
-            const formData = new FormData();
-            formData.append("image", image);
-            try {
-                const res = await axios.post<PokemonDetection>("/api/analyze", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                });
-                console.log(res.data);
-                setItem(res.data);
-                setHistory((prevState) => ([{ id: Math.random(), body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
-            } catch (error) {
-                console.error("Error uploading image:", error);
-                setError("An error occurred while analyzing the image.");
-            } finally {
-                setLoading(false);
-            }
+        if (!image) {
+            return
+        }
+
+        const url = URL.createObjectURL(image as File);
+        setLoading(true);
+        const formData = new FormData();
+        formData.append("image", image);
+        try {
+            const res = await axios.post<PokemonDetection>("/api/analyze", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            setItem(res.data);
+
+            setHistory((prevState) => ([{ id: Math.floor(Math.random() * 69420), pokemonId: res.data.id, body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
+            setDetectedPokemonId(history[history.length - 1].id);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            setError("An error occurred while analyzing the image.");
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (pathname.includes("/upload") && !loading && image) {
+        handleUpload()
+    }
+    if (DetectedPokemonId !== undefined) {
+        redirect(`/pokemons/${DetectedPokemonId + 1}`)
+    }
+
 
     return (
         <>
@@ -93,11 +118,6 @@ export default function ImageUploader() {
                 <Image src={'/header.png'} width={50} height={50} alt="" className="absolute left-[0] top-[0] w-full" unoptimized />
 
 
-                <div>
-                    <button style={{ background: "black" }} onClick={startCamera}>
-                        Start Camera
-                    </button>
-                </div>
                 <div className="flex justify-center w-full h-[800px]">
                     <Image
                         src={'/captureNoBG.png'}
@@ -107,10 +127,6 @@ export default function ImageUploader() {
                         className="w-[700px]  object-contain opacity-80 z-[200]"
                     />
                 </div>
-
-
-
-
                 <Camera setImage={(image) => {
                     setImage(image);
                     setItem(null);
@@ -118,11 +134,9 @@ export default function ImageUploader() {
                 }} />
 
                 <div
-                    className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]    flex justify-center  bg-violet-500"
+                    className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]   h-[5.5rem]  flex justify-center  bg-violet-500"
 
                 >
-
-                    <Image src={'/capture.svg'} width={50} height={50} alt="" onClick={() => document.getElementById("file-input")?.click()} className="min-w-[90px] relative  cursor-pointer" />
                 </div>
 
                 <input
@@ -133,15 +147,7 @@ export default function ImageUploader() {
                     className="hidden"
                 />
 
-                {image && (
-                    <div className=" flex justify-center w-full h-w-full">
-                        <img
-                            src={URL.createObjectURL(image)}
-                            alt="Uploaded Preview"
-                            className=" object-cover rounded-lg border"
-                        />
-                    </div>
-                )}
+                {loading && (<h2>TODO</h2>)}
                 {error && <p>{error}</p>}
                 {currentUrl && (
                     <div className="mt-4 flex justify-center">
@@ -152,18 +158,13 @@ export default function ImageUploader() {
                         />
                     </div>
                 )}
-
-                {(loading || image) && <Button onClick={handleUpload} disabled={loading} className="w-full">
-                    {loading ? "Analyzing..." : "Analyze Image"}
-                </Button>}
-
                 {item && (
                     <div className="mt-4 text-center text-lg text-gray-700">
-                        <p><strong>Pikachu detected:</strong> {item.isPokemon ? "Yes" : "No"}</p>
+                        <p><strong>{item.name} detected:</strong></p>
                         <p><strong>Description:</strong> {item.description}</p>
                         {item.isPokemon && <>
                             <p><strong>Name:</strong> {item.name}</p>
-                            <p><strong>Code:</strong> {item.code}</p>
+                            <p><strong>Code:</strong> {item.pokedex_code}</p>
                             <p><strong>Type:</strong> {item.type}</p>
                         </>}
                         {item.isPokemon && item.weakness && <>
@@ -206,24 +207,6 @@ export default function ImageUploader() {
                     </div>
                 )}
             </Card >
-
-            <div className="max-w-2xl mx-auto mt-6">
-                <h3 className="text-xl font-semibold mb-4">Recent Analyses</h3>
-                {historyLoading ? (
-                    <div className="flex justify-center items-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-                    </div>
-                ) : (
-                    <RecentHistory
-                        setItem={(item) => {
-                            setItem(item.body);
-                            setCurrentUrl(item.url);
-                            setImage(null);
-                        }}
-                        elems={history}
-                    />
-                )}
-            </div>
         </>
     );
 }

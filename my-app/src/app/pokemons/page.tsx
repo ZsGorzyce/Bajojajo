@@ -2,17 +2,17 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
-import {HistoryElem, PokemonDetection} from "@/types/history"; // Import your existing Supabase client
+import { HistoryElem, PokemonDetection } from "@/types/history"; // Import your existing Supabase client
 
 const Page = () => {
     const [pokemons, setPokemons] = useState<any[]>([]);
     console.log(pokemons);
     const [loading, setLoading] = useState(true);
-    const supabase=createClient()
+    const supabase = createClient()
     useEffect(() => {
         const fetchPokemons = async () => {
             const { data: { user } } = await supabase.auth.getUser();
-            if(!user){
+            if (!user) {
                 setLoading(false);
                 return
 
@@ -38,10 +38,10 @@ const Page = () => {
                     )
                 );*/
                 setPokemons(data?.map(el => ({
-                        ...el,
-                        body: JSON.parse(el.body),
-                        url: `https://mkttmsharlpupjggoayx.supabase.co/storage/v1/object/public/photos/${el.url}`
-                    })).filter(el => el.body.isPokemon))
+                    ...el,
+                    body: JSON.parse(el.body),
+                    url: `https://mkttmsharlpupjggoayx.supabase.co/storage/v1/object/public/photos/${el.url}`
+                })).filter(el => el.body.isPokemon))
             }
 
             setLoading(false);
@@ -56,16 +56,16 @@ const Page = () => {
         setCurrentImage(item.url)
     }*/
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Pokémons</h1>
+        <div className="p-6 "  >
+            <h1 className="text-2xl font-bold mb-4 text-violet-200 text-center">Your discovered pokemons</h1>
 
             {loading ? (
                 <p>Loading...</p>
             ) : pokemons.length === 0 ? (
                 <p>No Pokémons found.</p>
             ) : (
-                <ul className="space-y-2">
-                    <RecentHistory withLinks elems={pokemons}/>
+                <ul className="space-y-2 flex justify-center">
+                    <RecentHistory withLinks elems={pokemons} />
                 </ul>
             )}
         </div>

@@ -43,12 +43,17 @@ export async function POST(request: NextRequest) {
         // Use the Gemini AI model to generate a description
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const result = await model.generateContent([
-            'Need recognize Pokémon  on image. I want see JSOM FORMAT like that. Must be no Comments in the object! Should be only object!!! : {isPokemon :true/false,' +
-            'description:provide arguments why it not pokemon if pokemon not exist if pokemon exist description of pokemon,' +
-            'name:give me name of pikachu if detected,' +
-            'code:code of pokemon like #0001, weakness:list of weakness,type:type of pokemon',
+            'Need recognize a Pokémon based on image. I want you to give me VALID JSON FORMAT. There must be NO Comments in the object!!!' +
+            "If you recognize a someone or something that is not pokemon give me message unknown data" +
+            'Your response should look something like this:' +
+            '{isPokemon: true/false,' +
+            'description: description of the pokemon,' +
+            'name: give me name of the pokemon if detected,' +
+            'pokedex_code: number of the pokemon in pokedex like #0001,' +
+            'weakness:list of weakness,' +
+            'type:type of pokemon,' +
             'properties:{height:height of pokemon,category:category of pokemon,weight:weight of pokemon,' +
-            'abilities:abilities of pokemon display it in string like ability1/ability2/ability/3,Gender:gender of pokemon,}}',
+            'abilities:abilities of pokemon display it in string like ability1/ability2/ability3,Gender:gender of the pokemon}}',
             {
                 fileData: {
                     fileUri: fileUri.file.uri,
@@ -100,7 +105,7 @@ export async function POST(request: NextRequest) {
                         url: fileName, // Store the filename (or full URL if needed)
                         body: trimmedString,
                     },
-                ]);
+                ]).select();
 
             if (insertError) {
                 console.error('Error inserting into Supabase:', insertError);
@@ -115,7 +120,7 @@ export async function POST(request: NextRequest) {
                 url: imageUrl, // Add the image URL to the response
             };
 
-            return new Response(JSON.stringify(combinedResponse), {
+            return new Response(JSON.stringify({ ...combinedResponse }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
             });
