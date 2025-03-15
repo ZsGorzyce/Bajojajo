@@ -53,8 +53,8 @@ export default function RegisterPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center login-page-bg">
-            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md !bg-zinc-900">
-                <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
+            <div className="p-8 rounded-xl shadow-lg w-full max-w-md bg-zinc-900">
+                <h2 className="text-2xl font-bold mb-4 text-purple-500">Create an Account</h2>
                 {error && <div className="text-red-500 mb-4">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ export default function RegisterPage() {
                     <Button
                         type="submit"
                         style={{ background: "black" }}
-                        className="w-full !bg-purple-950 text-white py-2 px-4 rounded-md"
+                        className="w-full !bg-purple-600 text-white py-2 px-4 rounded-md"
                         disabled={loading}
                     >
                         {loading ? 'Signing Up...' : 'Sign Up'}
