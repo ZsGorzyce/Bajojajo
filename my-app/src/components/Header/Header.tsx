@@ -20,14 +20,15 @@ import Zdj from "../../../public/logo/noweLogo.png"
 
 export const AcmeLogo = () => {
     return (
-        <Image
-            src={Zdj}
-            alt=""
-            width={175}
-            height={175}
+        <Link href="http://localhost:3000">
+            <Image
+                src={Zdj}
+                alt=""
+                width={175}
+                height={175}
 
-        />
-
+            />
+        </Link>
     );
 };
 
