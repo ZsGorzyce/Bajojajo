@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const result = await model.generateContent([
             'Need recognize a Pokémon based on image. I want you to give me VALID JSON FORMAT. There must be NO Comments in the object!!!' +
-            "If you recognize a someone or something that is not pokemon give me message unknown data" +
+            "If you recognize a someone or something that is not pokemon give me response:" +
             'Your response should look something like this:' +
             '{isPokemon: true/false,' +
             'description: description of the pokemon,' +

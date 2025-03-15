@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'; // Use useParams instead of useRouter
 import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
-
+import Image from 'next/image';
 // Initialize the Supabase client (use your actual Supabase URL and key here)
 
 const Page = () => {
@@ -48,7 +48,9 @@ const Page = () => {
     }, [id]); // Re-run the effect when the 'id' changes
 
     // Render the loading, error, or data
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="fixed h-screen w-full left-[0] top-[0] !bg-[#181b1d] z-[10000]">
+        <Image src={'/loading.gif'} className="fixed left-[0] top-[0] object-contain w-full h-screen z-[1999]" height={50} width={50} alt="" />
+    </div>;
     if (error) return <div>Error: {error}</div>;
 
     const item = pokemon?.body;

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import Cat from "../../../public/cat.gif"
-import Kachoot from "../../../public/kahoot.png"
 
 export default function Footer() {
     return (

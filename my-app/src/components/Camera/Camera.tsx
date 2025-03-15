@@ -72,7 +72,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage,error }) => 
                 autoPlay
                 playsInline
                 muted
-                className="w-[425px] aspect-square rounded-full object-cover"
+                className="w-[425px] kamera aspect-square rounded-full object-cover"
             ></video>
 
 

@@ -83,6 +83,6 @@ html {
 
 @media only screen and (max-width:500px) {
     .kamera {
-        width: ;
+        padding: 2rem !important;
     }
 }
