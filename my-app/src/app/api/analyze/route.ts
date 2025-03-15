@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
                         url: fileName, // Store the filename (or full URL if needed)
                         body: trimmedString,
                     },
-                ]);
+                ]).select();
 
             if (insertError) {
                 console.error('Error inserting into Supabase:', insertError);
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
                 url: imageUrl, // Add the image URL to the response
             };
 
-            return new Response(JSON.stringify(combinedResponse), {
+            return new Response(JSON.stringify({ ...combinedResponse }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
             });

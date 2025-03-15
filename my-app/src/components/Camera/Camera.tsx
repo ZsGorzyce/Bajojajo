@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import React, { useState, useRef, useEffect } from "react";
 
 interface CameraComponentProps {
     setImage: (image: File) => void;
@@ -8,6 +10,7 @@ interface CameraComponentProps {
 
 const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const pathname = usePathname();
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     // Start the camera
@@ -21,6 +24,12 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
             console.error("Error accessing the camera:", error);
         }
     };
+
+    useEffect(() => {
+        if (pathname.includes("/upload")) {
+            startCamera()
+        }
+    }, [pathname])
 
     // Capture a photo from the video stream
     const capturePhoto = () => {
@@ -66,15 +75,11 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
             ></video>
 
 
-            <div>
-                <div>
-                    <button style={{ background: "black" }} onClick={startCamera}>
-                        Start Camera
-                    </button>
-                </div>
-                <button style={{ background: "black" }} onClick={capturePhoto}>
-                    Capture Photo
-                </button>
+            <div className="absolute bottom-[0]">
+
+                <Image src={'/capture.svg'} width={50} height={50} alt="" onClick={capturePhoto} className="min-w-[90px] kamera top-[4.4rem] relative  cursor-pointer" />
+
+
             </div>
             {/* {imageSrc && (
                 <div>

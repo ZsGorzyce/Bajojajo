@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button, Card } from "@heroui/react";
 import { HistoryElem, PokemonDetection } from "@/types/history";
@@ -7,16 +7,35 @@ import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ImageUploader() {
     const supabase = createClient();
     const [image, setImage] = useState<File | null>(null);
     const [error, setError] = useState("");
+    const [DetectedPokemonId, setDetectedPokemonId] = useState()
     const [loading, setLoading] = useState(false);
     const [item, setItem] = useState<PokemonDetection | null>(null);
     const [history, setHistory] = useState<HistoryElem[]>([]);
     const [currentUrl, setCurrentUrl] = useState<string | null>(null);
     const [historyLoading, setHistoryLoading] = useState(true); // New state for history loading
+
+
+    const [capturedImage, setCapturedImage] = useState<File | null>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    // Start the camera
+    const startCamera = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+            }
+        } catch (error) {
+            console.error("Error accessing the camera:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchHistory = async () => {
             console.log('ur');
@@ -63,6 +82,8 @@ export default function ImageUploader() {
         }
     };
 
+    const pathname = usePathname();
+
     const handleUpload = async () => {
         if (image) {
             const url = URL.createObjectURL(image as File);
@@ -77,7 +98,9 @@ export default function ImageUploader() {
                 });
                 console.log(res.data);
                 setItem(res.data);
-                setHistory((prevState) => ([{ id: Math.random(), body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
+
+                setHistory((prevState) => ([{ id: Math.random(), pokemonId: res.data.id, body: res.data, url, created_at: "", user_id: 1 }, ...prevState]));
+                setDetectedPokemonId(res.data.id);
             } catch (error) {
                 console.error("Error uploading image:", error);
                 setError("An error occurred while analyzing the image.");
@@ -86,6 +109,25 @@ export default function ImageUploader() {
             }
         }
     };
+
+    const router = useRouter();
+    console.log(history)
+
+    useEffect(() => {
+        if (pathname.includes("/upload") && !loading && image) {
+            handleUpload()
+
+        }
+
+        if (DetectedPokemonId !== undefined) {
+            router.push(`/pokemons/${DetectedPokemonId}`)
+        }
+
+    }, [pathname, image])
+
+    console.log(DetectedPokemonId)
+
+
 
     return (
         <>
@@ -113,11 +155,11 @@ export default function ImageUploader() {
                 }} />
 
                 <div
-                    className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]    flex justify-center  bg-violet-500"
+                    className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]   h-[5.5rem]  flex justify-center  bg-violet-500"
 
                 >
 
-                    <Image src={'/capture.svg'} width={50} height={50} alt="" onClick={() => document.getElementById("file-input")?.click()} className="min-w-[90px] relative  cursor-pointer" />
+
                 </div>
 
                 <input
@@ -148,9 +190,9 @@ export default function ImageUploader() {
                     </div>
                 )}
 
-                {(loading || image) && <Button onClick={handleUpload} disabled={loading} className="w-full">
-                    {loading ? "Analyzing..." : "Analyze Image"}
-                </Button>}
+
+
+
 
                 {item && (
                     <div className="mt-4 text-center text-lg text-gray-700">
