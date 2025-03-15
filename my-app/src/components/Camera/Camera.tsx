@@ -56,9 +56,16 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
     };
 
     return (
-        <div>
-            <h1>Take a Photo</h1>
-            <video ref={videoRef} autoPlay playsInline muted></video>
+        <div className="absolute inset-0 flex items-center h-[825px] justify-center z-[1]">
+            <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                muted
+                className="w-[425px] aspect-square rounded-full object-cover"
+            ></video>
+
+
             <div>
                 <div>
                     <button style={{ background: "black" }} onClick={startCamera}>
@@ -69,7 +76,7 @@ const CameraComponent: React.FC<CameraComponentProps> = ({ setImage }) => {
                     Capture Photo
                 </button>
             </div>
-           {/* {imageSrc && (
+            {/* {imageSrc && (
                 <div>
                     <h2>Captured Photo</h2>
                     <img src={imageSrc} alt="Captured" />

@@ -6,6 +6,8 @@ import { HistoryElem, PokemonDetection } from "@/types/history";
 import { createClient } from "@/utils/supabase/client";
 import RecentHistory from "@/components/RecentHistory/RecentHistory";
 import Camera from "@/components/Camera/Camera";
+import {}
+import Image from "next/image";
 
 export default function ImageUploader() {
     const supabase = createClient();
@@ -20,7 +22,7 @@ export default function ImageUploader() {
         const fetchHistory = async () => {
             console.log('ur');
             const { data: { user } } = await supabase.auth.getUser();
-            console.log('u',user);
+            console.log('u', user);
             if (!user) {
                 setHistoryLoading(false); // Stop loading if no user
                 return;
@@ -88,21 +90,40 @@ export default function ImageUploader() {
 
     return (
         <>
-            <Card className="max-w-lg mx-auto p-4 space-y-4 bg-white shadow-lg rounded-lg">
-               <Camera setImage={(image)=>{
-                   setImage(image);
-                   setItem(null);
-                   setCurrentUrl(null);
-               }}/>
-                <h2 className="text-2xl font-semibold text-center text-black">Upload and Analyze Image</h2>
+            <Card className="max-w-lg mx-auto p-4 space-y-4 bg-white shadow-lg rounded-none min-h-[900px] z-auto  bg-[url('/camera-bg.jpg')] bg-cover bg-no-repeat">
+                <Image src={'/header.png'} width={50} height={50} alt="" className="absolute left-[0] top-[0] w-full" unoptimized />
+
+
+                <div>
+                    <button style={{ background: "black" }} onClick={startCamera}>
+                        Start Camera
+                    </button>
+                </div>
+                <div className="flex justify-center w-full h-[800px]">
+                    <Image
+                        src={'/captureNoBG.png'}
+                        width={250}
+                        height={250}
+                        alt="Image Description"
+                        className="w-[700px]  object-contain opacity-80 z-[200]"
+                    />
+                </div>
+
+
+
+
+                <Camera setImage={(image) => {
+                    setImage(image);
+                    setItem(null);
+                    setCurrentUrl(null);
+                }} />
 
                 <div
-                    className="w-full p-5 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:border-blue-500 flex justify-center items-center"
-                    onClick={() => document.getElementById("file-input")?.click()}
+                    className="w-full p-[6px] my-[0] absolute left-[0] bottom-[0]    flex justify-center  bg-violet-500"
+
                 >
-                    <span className="text-gray-500 text-lg">
-                        {image ? "Change Image" : "Click to Upload Image"}
-                    </span>
+
+                    <Image src={'/capture.svg'} width={50} height={50} alt="" onClick={() => document.getElementById("file-input")?.click()} className="min-w-[90px] relative  cursor-pointer" />
                 </div>
 
                 <input
@@ -114,11 +135,11 @@ export default function ImageUploader() {
                 />
 
                 {image && (
-                    <div className="mt-4 flex justify-center">
+                    <div className=" flex justify-center w-full h-w-full">
                         <img
                             src={URL.createObjectURL(image)}
                             alt="Uploaded Preview"
-                            className="max-w-xs max-h-60 object-cover rounded-lg border"
+                            className=" object-cover rounded-lg border"
                         />
                     </div>
                 )}
@@ -146,7 +167,7 @@ export default function ImageUploader() {
                             <p><strong>Code:</strong> {item.code}</p>
                             <p><strong>Type:</strong> {item.type}</p>
                         </>}
-                        {item.isPokemon &&  item.weakness && <>
+                        {item.isPokemon && item.weakness && <>
                             <h3>Weakness:</h3>
                             {item.weakness.map((weakness: string, index: number) => (
                                 <span
@@ -167,25 +188,25 @@ export default function ImageUploader() {
                                 </span>
                             ))}
                         </>}
-                        {item.isPokemon && item.properties &&  <div style={{ marginTop: '10px' }}>
-                            { Object.entries(item.properties).map(([key, value], i) => (<div key={i}>
-                                    {value ? <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            borderBottom: '1px solid #333',
-                                            padding: '5px 0',
-                                        }}
-                                    >
-                                        <span style={{ fontWeight: 'bold' }}>{key}:</span>
-                                        {typeof value === "string" ? <span>{value}</span> : ""}
-                                    </div> : ""}
-                                </div>
+                        {item.isPokemon && item.properties && <div style={{ marginTop: '10px' }}>
+                            {Object.entries(item.properties).map(([key, value], i) => (<div key={i}>
+                                {value ? <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        borderBottom: '1px solid #333',
+                                        padding: '5px 0',
+                                    }}
+                                >
+                                    <span style={{ fontWeight: 'bold' }}>{key}:</span>
+                                    {typeof value === "string" ? <span>{value}</span> : ""}
+                                </div> : ""}
+                            </div>
                             ))}
                         </div>}
                     </div>
                 )}
-            </Card>
+            </Card >
 
             <div className="max-w-2xl mx-auto mt-6">
                 <h3 className="text-xl font-semibold mb-4">Recent Analyses</h3>

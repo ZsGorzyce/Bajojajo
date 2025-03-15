@@ -148,10 +148,11 @@ export default function Header() {
 
                     <NavbarMenu>
                         {menuItems.map((item, index) => (
-                            <NavbarMenuItem key={`${item}-${index}`}>
+                            <NavbarMenuItem onChange={() => setIsMenuOpen(false)} key={`${item}-${index}`}>
                                 <Link
                                     onPress={() => setIsMenuOpen(false)}
                                     className="w-full"
+
                                     color={
                                         index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
                                     }
