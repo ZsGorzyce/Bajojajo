@@ -14,48 +14,6 @@ export default function ImageUploader() {
     const [DetectedPokemonId, setDetectedPokemonId] = useState<number>()
     const [loading, setLoading] = useState(false);
     const router=useRouter();
-    /*const [item, setItem] = useState<PokemonDetection | null>(null);
-    const [history, setHistory] = useState<HistoryElem[]>([]);
-    const [currentUrl, setCurrentUrl] = useState<string | null>(null);*/
-  /*  useEffect(() => {
-        const fetchHistory = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            console.log('u', user);
-            if (!user) {
-                return;
-            }
-
-            try {
-                const { data, error } = await supabase
-                    .from("pokemons")
-                    .select("*")
-                    .eq("user_id", user.id);
-
-                if (error) {
-                    console.error("Error fetching history:", error);
-                } else {
-                    const mappedData = data?.map(el => ({
-                        ...el,
-                        body: JSON.parse(el.body),
-                        url: `https://mkttmsharlpupjggoayx.supabase.co/storage/v1/object/public/photos/${el.url}`
-                    }));
-                    setHistory(mappedData || []);
-                }
-            }
-            catch (error) {
-                console.error("Error fetching history:", error);
-            }
-        };
-        fetchHistory();
-    }, []);*/
- /*   const onInputChangeHandler = (e: any) => {
-        const file = e.target.files?.[0];
-        setImage(file || null);
-        if (file) {
-            setCurrentUrl(null);
-            setItem(null);
-        }
-    };*/
 
     const pathname = usePathname();
 
@@ -63,6 +21,7 @@ export default function ImageUploader() {
         if (!image) {
             return
         }
+        setError("")
         setLoading(true);
         const formData = new FormData();
         formData.append("image", image);
@@ -124,13 +83,6 @@ export default function ImageUploader() {
                 >
                 </div>
 
-               {/* <input
-                    id="file-input"
-                    type="file"
-                    accept="image/*"
-                    onChange={onInputChangeHandler}
-                    className="hidden"
-                />*/}
 
                 {loading && (<p style={{zIndex:5}}>Loading</p>)}
             </Card >
