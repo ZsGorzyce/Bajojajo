@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
             const endIdx = res.lastIndexOf('}');
             const trimmedString = res.slice(startIdx, endIdx + 1);
             const parsedBlock=JSON.parse(trimmedString);
+            if(!parsedBlock.isPokemon) return new Response('No pokemon Detected!', { status: 400 });
             // Upload the image to Supabase bucket named 'photos'
             const { data:exsitingPokemon, error } = await supabase
                 .from("pokemons")
