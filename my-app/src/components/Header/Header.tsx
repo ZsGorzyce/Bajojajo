@@ -14,7 +14,6 @@ import {
 
 import { HeroUIProvider } from "@heroui/react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Zdj from "../../../public/logo/noweLogo.png"
@@ -34,7 +33,7 @@ export const AcmeLogo = () => {
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [User, setUser]: User | null = useState(null);
+    const [User, setUser] = useState<User | null>(null);
 
     const supabase = createClient();
     useEffect(() => {
