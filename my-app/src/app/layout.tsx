@@ -1,14 +1,6 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
-import {
-  HeroUIProvider,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button
-} from '@heroui/react'; // Importing components from heroui/react
+import { HeroUIProvider } from '@heroui/react';
 
 import "./globals.css"
 import "../input.css"
@@ -42,7 +34,7 @@ export default function RootLayout({
 
       <head></head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark text-foreground bg-background `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark text-foreground bg-black h-screen`}
       >
         <HeroUIProvider>
           <Header />
