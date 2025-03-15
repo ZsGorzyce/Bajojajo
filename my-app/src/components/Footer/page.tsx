@@ -19,7 +19,7 @@ export default function Footer() {
 
                             <a href="#" target="_blank" className="text-gray-400 hover:text-violet-100">
                                 <Image src={Cat} width={150} height={150} alt="Twitter" className="w-16 h-16" />
-                                <Image src={Kachoot} width={150} height={150} alt="Kahoot" className="w-16 h-16" />
+
                             </a>
 
                         </div>
