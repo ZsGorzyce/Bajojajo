@@ -71,7 +71,7 @@ export default function Header() {
 
     },
     {
-        name: "ads", href: "#asd",
+        name: "Pokedex", href: "/pokemons",
     }
     ];
     return (
