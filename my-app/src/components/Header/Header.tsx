@@ -15,7 +15,8 @@ import {
 import { HeroUIProvider } from "@heroui/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createClient } from "@/utils/supabase/client";
 import Zdj from "../../../public/logo/noweLogo.png"
 
 export const AcmeLogo = () => {
@@ -32,9 +33,35 @@ export const AcmeLogo = () => {
 };
 
 export default function Header() {
-    const pathname = usePathname();
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [User, setUser]: User | null = useState(null);
+
+    const supabase = createClient();
+    useEffect(() => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session: Session | null) => {
+            setUser(session?.user);
+        });
+
+        const checkUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+        };
+
+        checkUser();
+
+        return () => {
+            subscription.unsubscribe();
+        }
+    }, []);
+
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error('Error logging out:', error.message);
+        } else {
+            setUser(null);
+        }
+    };
 
     const menuItems = [{
         name: "Features", href: "#features",
@@ -101,14 +128,22 @@ export default function Header() {
                     </NavbarContent>
 
                     <NavbarContent justify="end">
-                        <NavbarItem className="lg:flex text-violet-500">
-                            <Link href="/login" className="text-violet-500">Login</Link>
-                        </NavbarItem>
-                        <NavbarItem className="text-violet-500">
-                            <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
-                                Sign Up
-                            </Button>
-                        </NavbarItem>
+                        {!User ? (
+                            <>
+                                <NavbarItem className="lg:flex text-violet-500">
+                                    <Link href="/login" className="text-violet-500">Login</Link>
+                                </NavbarItem>
+                                <NavbarItem className="text-violet-500">
+                                    <Button as={Link} className="text-violet-500 bg-violet-950 bg-opacity-20" href="http://localhost:3000/register" variant="flat">
+                                        Sign Up
+                                    </Button>
+                                </NavbarItem>
+                            </>
+                        ) : (
+                            <NavbarItem className="lg:flex text-violet-500">
+                                <Button style={{ background: "black" }} onPress={handleLogout} className="text-violet-500">Logout</Button>
+                            </NavbarItem>
+                        )}
                     </NavbarContent>
 
                     <NavbarMenu>
